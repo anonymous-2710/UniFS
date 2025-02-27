@@ -1,0 +1,31 @@
+model:
+  target: model.SFINET.SFINet
+  params:
+    channels: 64
+
+
+training:
+  name: SFINet_Multix4_0201
+  max_epoch: 100
+  batch_size: 8
+  initial_lr: 0.0001
+  val_interval: 1
+  ckpt_save_dir: Results/SFINet
+  loss_type: torch.nn.MSELoss
+  wrapper: model.wrapper.BaseModelWrapper
+
+data:
+  dataset: dataset.DynamicMRIDataset
+  img_train_dir: Dataset/Multix4/train/center # For DynamicMRIDataset, center part data is enough
+  img_val_dir: Dataset/Multix4/val/center
+
+test:
+  dataset: dataset.MRIDataset
+  img_test_dir: Dataset/Multix4/test
+  result_dir: Results/SFINet/inferTs
+
+log:
+  project: MRI-Reconstruction
+  log_dir: Logs/SFINet
+
+experiment_goal: "SFINet ablation on l1/mse/freq hybrid loss, this: space only mse"

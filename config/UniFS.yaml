@@ -1,0 +1,35 @@
+model:
+  target: model.UniFS.UniFS
+  params:
+    n_resgroups: 3
+    n_resblocks: 6
+    concat_index_list: [ 0,1,2 ]
+
+
+training:
+  name: UniFS_k3_Multix4_0120
+  max_epoch: 100
+  batch_size: 8
+  initial_lr: 0.0001
+  val_interval: 1
+  ckpt_save_dir: Results/UniFS
+  loss_type: torch.nn.MSELoss
+  wrapper: model.wrapper.BaseModelWrapper
+
+data:
+  dataset: dataset.DynamicMRIDataset
+  #  dataset: dataset.MRIDataset
+  img_train_dir: Dataset/Multix4/train/center # For DynamicMRIDataset, center part data is enough
+  img_val_dir: Dataset/Multix4/val/center
+
+test:
+  dataset: dataset.MRIDataset
+  img_test_dir: Dataset/Multix4/test
+  result_dir: Results/UniFS/inferTs
+
+log:
+  project: MRI-Reconstruction
+  log_dir: Logs/UniFS
+
+experiment_goal: "UniFS two encoder input T1HR T2LR, multi task"
+

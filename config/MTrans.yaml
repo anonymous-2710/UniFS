@@ -1,0 +1,41 @@
+model:
+  target: model.MTrans.CrossCMMT
+  params:
+    INPUT_SIZE: 224
+    INPUT_DIM: 1
+    OUTPUT_DIM: 1
+    HEAD_HIDDEN_DIM: 16
+    CTDEPTH: 4
+    TRANSFORMER_NUM_HEADS: 4
+    TRANSFORMER_MLP_RATIO: 3
+    P1: 8
+    P2: 16
+
+
+training:
+  name: MTrans_HCP_Multix4_0222
+  max_epoch: 100
+  batch_size: 8
+  initial_lr: 0.00001 # Will break up on 1e-4
+  val_interval: 1
+  ckpt_save_dir: Results/MTrans
+  loss_type: loss.LossNotIntegrated
+  wrapper: model.wrapper.MTransModelWrapper
+
+data:
+  dataset: dataset.DynamicMRIDataset
+  #  dataset: dataset.MRIDataset
+  img_train_dir: Dataset/HCP_Multix4/train/center # For DynamicMRIDataset: center part data is enough
+  img_val_dir: Dataset/HCP_Multix4/val/center
+
+test:
+  dataset: dataset.MRIDataset
+  img_test_dir: Dataset/HCP_Multix4/test
+  result_dir: Results/MTrans/inferTs
+
+log:
+  project: MRI-Reconstruction
+  log_dir: Logs/MTrans
+
+experiment_goal: "MTrans compare method on HCP, x4 acceleration"
+

@@ -1,0 +1,34 @@
+model:
+  target: model.MC_VarNet.VANet
+  params:
+    in_channel: 32
+    channel_fea: 32
+    iter_num: 4
+
+training:
+  name: MCVarNet_Multix8_0219
+  max_epoch: 100
+  batch_size: 8
+  initial_lr: 0.0001
+  val_interval: 1
+  ckpt_save_dir: Results/MCVarNet
+  loss_type: loss.LossNotIntegrated
+  wrapper: model.wrapper.MCVarNetModelWrapper
+
+data:
+  dataset: dataset.DynamicMRIDataset
+  #  dataset: dataset.MRIDataset
+  img_train_dir: Dataset/Multix8/train/center # For DynamicMRIDataset, center part data is enough
+  img_val_dir: Dataset/Multix8/val/center
+
+test:
+  dataset: dataset.MRIDataset
+  img_test_dir: Dataset/Multix8/test
+  result_dir: Results/MCVarNet/inferTs
+
+log:
+  project: MRI-Reconstruction
+  log_dir: Logs/MCVarNet
+
+experiment_goal: "Comparison method mMCVarNet test on BraTs, x8 acceleration"
+

@@ -1,0 +1,33 @@
+model:
+  target: model.FSMNet.TwoBranch
+  params:
+    base_num_every_group: 1
+    num_features: 64
+    num_channels: 1
+    act: "PReLU"
+
+training:
+  name: FSMNet_HCP_Multix8_0223
+  max_epoch: 100
+  batch_size: 6
+  initial_lr: 0.0001
+  val_interval: 1
+  ckpt_save_dir: Results/FSMNet
+  loss_type: loss.SpatialFrequencyLoss_L1
+  wrapper: model.wrapper.FSMNetModelWrapper
+
+data:
+  dataset: dataset.DynamicMRIDataset
+  img_train_dir: Dataset/HCP_Multix8/train/center # For DynamicMRIDataset, center part data is enough
+  img_val_dir: Dataset/HCP_Multix8/val/center
+
+test:
+  dataset: dataset.MRIDataset
+  img_test_dir: Dataset/HCP_Multix8/test
+  result_dir: Results/FSMNet/inferTs
+
+log:
+  project: MRI-Reconstruction
+  log_dir: Logs/FSMNet
+
+experiment_goal: "FSMNet comparison method on HCP, x8"

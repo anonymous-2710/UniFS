@@ -1,0 +1,38 @@
+model:
+  target: model.MINet.MINet
+  params:
+    n_resgroups: 6
+    n_resblocks: 6
+    n_feats: 64
+
+
+training:
+  name: MINet_HCP_Multix4_0222
+  max_epoch: 100
+  batch_size: 4
+  initial_lr: 0.0001
+  val_interval: 1
+  ckpt_save_dir: Results/MINet
+  loss_type: loss.LossNotIntegrated
+  wrapper: model.wrapper.MINetModelWrapper
+
+data:
+  dataset: dataset.DynamicMRIDataset # For DynamicMRIDataset, center part data is enough
+  #  dataset: dataset.MRIDataset
+  #  img_train_dir: Dataset/FastMRI_Multix4/train/center # FastMRI
+  #  img_val_dir: Dataset/FastMRI_Multix4/val/center
+  img_train_dir: Dataset/HCP_Multix4/train/center # BraTs
+  img_val_dir: Dataset/HCP_Multix4/val/center
+
+test:
+  dataset: dataset.MRIDataset
+  #  img_test_dir: Dataset/FastMRI_Multix4/test
+  img_test_dir: Dataset/HCP_Multix4/test
+  result_dir: Results/MINet/inferTs
+
+log:
+  project: MRI-Reconstruction
+  log_dir: Logs/MINet
+
+experiment_goal: "MINet compare method on HCP, x4 acceleration"
+

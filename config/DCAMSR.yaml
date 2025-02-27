@@ -1,0 +1,36 @@
+model:
+  target: model.DCAMSR.DCAMSR
+  params:
+    input_size: 256
+
+
+training:
+  name: DCAMSR_HCP_Multix8_0223
+  max_epoch: 100
+  batch_size: 12
+  initial_lr: 0.0001
+  val_interval: 1
+  ckpt_save_dir: Results/DCAMSR
+  loss_type: torch.nn.L1Loss
+  wrapper: model.wrapper.BaseModelWrapper
+
+data:
+  dataset: dataset.DynamicMRIDataset # For DynamicMRIDataset, center part data is enough
+  #  dataset: dataset.MRIDataset
+  #  img_train_dir: Dataset/FastMRI_Multix4/train/center # FastMRI
+  #  img_val_dir: Dataset/FastMRI_Multix4/val/center
+  img_train_dir: Dataset/HCP_Multix8/train/center # BraTs
+  img_val_dir: Dataset/HCP_Multix8/val/center
+
+test:
+  dataset: dataset.MRIDataset
+  #  img_test_dir: Dataset/FastMRI_Multix4/test
+  img_test_dir: Dataset/HCP_Multix8/test
+  result_dir: Results/DCAMSR/inferTs
+
+log:
+  project: MRI-Reconstruction
+  log_dir: Logs/DCAMSR
+
+experiment_goal: "DCAMSR compare method on HCP, x8 acceleration"
+
