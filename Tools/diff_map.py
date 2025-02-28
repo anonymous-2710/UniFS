@@ -84,32 +84,3 @@ def generate_unified_heatmaps(image_pairs, output_dir):
     combined_path = os.path.join(output_dir, 'combined_heatmaps.png')
     plt.savefig(combined_path, bbox_inches='tight', dpi=150)
     print(f"所有结果已保存至：{output_dir}")
-
-
-if __name__ == "__main__":
-    # src = 'BraTS2021_01356_RND_XZ79'
-    # src = 'BraTS2021_01639_RND_XZ84'
-    src = 'BraTS2021_01047_RND_XZ73'
-    dir_list = [f'/mnt/lijl/Restormer/Results/MTrans/inferTs/MTrans_Multix4_0217/{src}/',
-                f'/mnt/lijl/Restormer/Results/DCAMSR/inferTs/DCAMSR_Multix4_0217/{src}/',
-                f'/mnt/lijl/Restormer/Results/FSMNet/inferTs/FSMNet_Multix4_0125/{src}/',
-                f'/mnt/lijl/Restormer/Results/MINet/inferTs/MINet_Multix4_0217/{src}/',
-                f'/mnt/lijl/Restormer/Results/tmp/MCVarNet_Multix4_0219/{src}/',
-                f'/mnt/lijl/Restormer/Results/tmp/RCAN_Final_LR_Multix4_0216/{src}/']
-    image_pairs = []
-    for src_dir in dir_list:
-        t2_hr_path = os.path.join(src_dir, 't2_hr.nii.gz')
-        t2_sp_path = os.path.join(src_dir, 't2_sp.nii.gz')  # 修改输出文件名
-        image_pairs.append((t2_hr_path, t2_sp_path))
-
-    out_dir = '/mnt/lijl/Restormer/Results/visualization3/'
-    os.makedirs(out_dir, exist_ok=True)
-    generate_unified_heatmaps(image_pairs, out_dir)
-    # for src_dir in dir_list:
-    #     out_dir = os.path.join('/mnt/lijl/Restormer/Results/visualization/', src_dir.split('/')[-3])
-    #     os.makedirs(out_dir, exist_ok=True)
-    #     t2_hr_path = os.path.join(src_dir, 't2_hr.nii.gz')
-    #     t2_sp_path = os.path.join(src_dir, 't2_sp.nii.gz')  # 修改输出文件名
-    #     output_path = os.path.join(out_dir, 'diff.png')
-    #     # visualize_diff(t2_hr_path, t2_sp_path, output_path)
-    #     nifti_heatmap(t2_hr_path, t2_sp_path, output_path)

@@ -1,15 +1,16 @@
 import os
-import numpy as np
-import nibabel as nib
 import pickle
+
+import nibabel as nib
+import numpy as np
 from k_sampling import *
 from utils import *
 
 if __name__ == '__main__':
     sp = 'val'
-    src_dir = f'/data1/lijl/HCP/{sp}/'  # BraTs 74:24:24
-    tgt_dir = f'/data1/lijl/MCMR/Dataset/HCP_Multix4/{sp}/'
-    visualize_dir = '/data1/lijl/MCMR/Dataset/HCP_Multix4/visualize'
+    src_dir = 'root_src'  # BraTs 74:24:24
+    tgt_dir = 'root_tar'
+    visualize_dir = 'root_vis'
     ref_path = "../Dataset/ref.nii.gz"
     ref_img = sitk.ReadImage(ref_path)
     os.makedirs(visualize_dir, exist_ok=True)
